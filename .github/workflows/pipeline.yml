@@ -45,7 +45,7 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}          
 
       - name: report failure
-        if: ${{ failure() && github.env.DEPLOY }}
+        if:  failure() && github.env.DEPLOY
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
