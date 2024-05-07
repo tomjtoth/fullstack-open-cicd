@@ -32,11 +32,11 @@ jobs:
           wait-on: http://localhost:5000
 
       - name: Trigger deployment
-        if: ${{ env.DEPLOY }}
+        if: ${{ github.env.DEPLOY }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
       - name: report success
-        if: ${{ env.DEPLOY && success() }}
+        if: ${{ github.env.DEPLOY && success() }}
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
@@ -45,7 +45,7 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}          
 
       - name: report failure
-        if: ${{ env.DEPLOY && failure() }}
+        if: ${{ github.env.DEPLOY && failure() }}
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
