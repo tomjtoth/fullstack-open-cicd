@@ -26,9 +26,28 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5000
+
       - name: Trigger deployment
         if: ${{ !contains(github.event.head_commit.message, '#skip') && github.event_name == 'push' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+
+      - name: report success
+        if: ${{ !contains(github.event.head_commit.message, '#skip') && github.event_name == 'push' && success() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          details: Deployed `${{ github.event.head_commit.id }}` like a ~GAUSS~ BOSS!
+          avatarUrl: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5slXgDa1VWsWD1TCM8PETFCQDLCzGclh2qw&s
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}          
+
+      - name: report failure
+        if: ${{ !contains(github.event.head_commit.message, '#skip') && github.event_name == 'push' && failure() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          details: ${{ github.event.head_commit.author.name }} has been Rickrolled, because deploying `${{github.event.head_commit.id }}` has failed
+          avatarUrl: https://www.pngmart.com/files/11/Rickrolling-PNG-Pic.png
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       
   tag_release:
       if: ${{ !contains(github.event.head_commit.message, '#skip') && github.event_name == 'push' }}
@@ -42,4 +61,3 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             WITH_V: true
             DEFAULT_BUMP: patch
-
