@@ -11,8 +11,10 @@ app.get('/health', (_req, res) => {
   res.status(200).end()
 })
 
-app.get('/feature', (_req, res) => {
-  res.send('2nd feature')
+app.get('/ping', (_req, res) => {
+  // eslint-disable-next-line no-constant-condition
+  if (true) throw new Error()
+  res.status(200).end()
 })
 
 app.listen(PORT, () => {
