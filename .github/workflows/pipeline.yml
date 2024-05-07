@@ -53,7 +53,7 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       
   tag_release:
-      if: ${{ env.DEPLOY }}
+      if: ${{ github.env.DEPLOY }}
       runs-on: ubuntu-20.04
       needs: [simple_deployment_pipeline]
       steps:
