@@ -40,10 +40,10 @@ jobs:
           description: ''
           details: Deployed `${{ github.event.head_commit.id }}` like a ~~GAUSS~~ BOSS!
           avatarUrl: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5slXgDa1VWsWD1TCM8PETFCQDLCzGclh2qw&s
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}          
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: report failure
-        if: !contains(github.event.head_commit.message, '#skip') && github.event_name == 'push' && failure()
+        if: failure()
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
