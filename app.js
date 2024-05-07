@@ -13,7 +13,7 @@ app.get('/health', (_req, res) => {
 
 app.get('/ping', (_req, res) => {
   // eslint-disable-next-line no-constant-condition
-  if (true) throw new Error()
+  if (true) throw new Error('failing on purpose')
   res.status(200).end()
 })
 
