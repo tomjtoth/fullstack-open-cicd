@@ -37,6 +37,7 @@ jobs:
         with:
           severity: info
           details: Deployed `${{ github.event.head_commit.id }}` like a ~GAUSS~ BOSS!
+          avatarUrl: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5slXgDa1VWsWD1TCM8PETFCQDLCzGclh2qw&s
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}          
 
       - name: report failure
@@ -45,6 +46,7 @@ jobs:
         with:
           severity: error
           details: ${{ github.event.head_commit.author.name }} has been Rickrolled, because deploying `${{github.event.head_commit.id }}` has failed
+          avatarUrl: https://www.pngmart.com/files/11/Rickrolling-PNG-Pic.png
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       
   tag_release:
