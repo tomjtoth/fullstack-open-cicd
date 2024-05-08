@@ -36,8 +36,6 @@ jobs:
         if: ${{ env.DEPLOY }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
-      - run: env
-
       - name: report success
         if: ${{ env.DEPLOY && success() }}
         run: echo success
@@ -65,6 +63,8 @@ jobs:
       needs: [simple_deployment_pipeline]
       steps:
         - uses: actions/checkout@v4
+
+        - run: env
 
         - run: echo tagging
           if: ${{ env.DEPLOY }}
