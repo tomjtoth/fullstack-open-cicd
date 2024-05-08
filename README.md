@@ -2,7 +2,7 @@
 
 This repository is used for the CI/CD module of the [Full stack open course](https://fullstackopen.com/en/part11). My submissions for the other parts of the course can be found [here](https://github.com/tomjtoth/fullstack-open).
 
-Fork the repository to complete course exercises
+Task `11.2{0,1}` were done to my previous tsoha application in [this](https://github.com/tomjtoth/veripalvelu) repo.
 
 ## Commands
 
