@@ -61,13 +61,14 @@ jobs:
         #   webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
-      if: ${{ env.DEPLOY }}
+      
       runs-on: ubuntu-20.04
       needs: [simple_deployment_pipeline]
       steps:
         - uses: actions/checkout@v4
 
         - run: echo tagging
+          if: ${{ env.DEPLOY }}
 
         # - name: Bump version and push tag
         #   uses: anothrNick/github-tag-action@1.69.0
