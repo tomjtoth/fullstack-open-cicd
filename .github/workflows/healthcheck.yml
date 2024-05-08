@@ -2,8 +2,8 @@ name: periodic healthcheck
 
 on:
   schedule:
-    # once an hour
-    - cron: '* 1 * * *'
+    # once a day at 12:00
+    - cron: '0 12 * * *'
 
 jobs:
   ping:
