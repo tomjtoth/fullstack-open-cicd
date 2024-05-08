@@ -61,7 +61,6 @@ jobs:
         #   webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
-      
       runs-on: ubuntu-20.04
       needs: [simple_deployment_pipeline]
       steps:
