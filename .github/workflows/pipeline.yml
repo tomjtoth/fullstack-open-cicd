@@ -33,11 +33,11 @@ jobs:
           wait-on: http://localhost:5000
 
       - name: Trigger deployment
-        if: ${{ env.DEPLOY }}
+        if: ${{ env.DEPLOY == 'true' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
       - name: report success
-        if: ${{ env.DEPLOY && success() }}
+        if: ${{ env.DEPLOY == 'true' && success() }}
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
@@ -45,7 +45,7 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: report failure
-        if: ${{ env.DEPLOY && failure() }}
+        if: ${{ env.DEPLOY == 'true' && failure() }}
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
@@ -61,7 +61,7 @@ jobs:
         - run: env
 
         - name: Bump version and push tag
-          if: ${{ env.DEPLOY }}
+          if: ${{ env.DEPLOY == 'true' }}
           uses: anothrNick/github-tag-action@1.69.0
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
