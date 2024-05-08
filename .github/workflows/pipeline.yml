@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-      - run: env
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -24,18 +23,15 @@ jobs:
       - run: npm run eslint
       - run: npm run build
       - run: npm run test
-
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5000
-
       - name: Trigger deployment
         if: ${{ env.DEPLOY == 'true' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
-
       - name: report success
         if: ${{ env.DEPLOY == 'true' && success() }}
         uses: rjstone/discord-webhook-notify@v1
@@ -43,7 +39,6 @@ jobs:
           severity: info
           avatarUrl: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5slXgDa1VWsWD1TCM8PETFCQDLCzGclh2qw&s
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
       - name: report failure
         if: ${{ env.DEPLOY == 'true' && failure() }}
         uses: rjstone/discord-webhook-notify@v1
@@ -58,9 +53,6 @@ jobs:
       needs: [simple_deployment_pipeline]
       steps:
         - uses: actions/checkout@v4
-
-        - run: env
-
         - name: Bump version and push tag
           uses: anothrNick/github-tag-action@1.69.0
           env:
